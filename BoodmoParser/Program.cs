@@ -1,2 +1,9 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using BoodmoParser;
+using System.Net;
+
+var context = ApplicationContext.GetContext();
+
+await context.Database.EnsureCreatedAsync();
+
+
+
