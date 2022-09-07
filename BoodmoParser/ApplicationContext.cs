@@ -1,4 +1,4 @@
-﻿using BoodmoParser.Database.Entities;
+﻿using BoodmoParser.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -48,6 +48,8 @@ namespace BoodmoParser
         public DbSet<OEMReplacementParts> OEMReplacementParts { get; set; }
 
         public DbSet<OffersProvided> OffersProvided { get; set; }
+
+        public DbSet<Number> Numbers { get; set; }
 
     }
 }

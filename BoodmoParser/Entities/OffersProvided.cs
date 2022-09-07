@@ -1,11 +1,12 @@
-﻿using Database.Entities;
+﻿using Entities;
+using Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BoodmoParser.Database.Entities
+namespace BoodmoParser.Entities
 {
     public class OffersProvided : BaseEntity
     {
@@ -14,5 +15,9 @@ namespace BoodmoParser.Database.Entities
         public double? Price { get; set; }
 
         public double DeliveryCharge { get; set; }
+
+        public Guid ItemId { get; set; }
+
+        public virtual Item item { get; set; }
     }
 }
