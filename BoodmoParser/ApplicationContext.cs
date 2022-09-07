@@ -15,7 +15,18 @@ namespace BoodmoParser
 
         }
 
-        public static ApplicationContext GetContext()
+        public static ApplicationContext GetSqlLiteContext()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationContext>();
+
+            options.UseSqlite($"DataSource=file:data_vin.db?&cache=shared");
+
+            var context = new ApplicationContext(options.Options);
+
+            return context;
+        }
+
+        public static ApplicationContext GetMySqlContext()
         {
             var options = new DbContextOptionsBuilder<ApplicationContext>();
 
@@ -31,8 +42,11 @@ namespace BoodmoParser
 
 
         public DbSet<Item> Item { get; set; }
+
         public DbSet<AftermarketReplacementParts> AftermarketReplacementParts { get; set; }
+
         public DbSet<OEMReplacementParts> OEMReplacementParts { get; set; }
+
         public DbSet<OffersProvided> OffersProvided { get; set; }
 
     }

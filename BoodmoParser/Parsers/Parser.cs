@@ -43,7 +43,7 @@ namespace BoodmoParser.Database.Parsers
 
         public abstract Task Parse();
 
-        protected async Task DownloadImg(string url, string name, string folder, HttpClient httpClient = null)
+        protected async Task DownloadImage(string url, string name, string folder, HttpClient httpClient = null)
         {
             if (File.Exists(@$"{_path}/{folder}/" + name))
                 return;
