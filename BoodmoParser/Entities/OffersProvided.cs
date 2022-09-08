@@ -1,5 +1,4 @@
 ﻿using Entities;
-using Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +16,5 @@ namespace BoodmoParser.Entities
         public double DeliveryCharge { get; set; }
 
         public Guid ItemId { get; set; }
-
-        public virtual Item item { get; set; }
     }
 }

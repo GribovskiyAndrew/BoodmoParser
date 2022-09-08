@@ -15,18 +15,14 @@ namespace BoodmoParser.Entities
 
         public string Title { get; set; }
 
-        public string SoldBy { get; set; }
-
         public double? Price { get; set; }
 
-        public string PartNumber { get; set; }
+        public string ShortNumber { get; set; }
 
         public int? Discount { get; set; }
 
         public double? OriginalPrice { get; set; }
 
         public Guid ItemId { get; set; }
-
-        public virtual Item item { get; set; }
     }
 }
