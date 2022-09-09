@@ -85,9 +85,9 @@ namespace BoodmoParser
             request.Headers.TryAddWithoutValidation("X-Client-App", "web");
             request.Headers.TryAddWithoutValidation("Accept", "application/json, text/plain, */*");
             request.Headers.TryAddWithoutValidation("Referer", "https://boodmo.com/");
-            request.Headers.TryAddWithoutValidation("X-Client-Id", "e3d9bcb2915ce83b40a3a90724e12b0b");
-            request.Headers.TryAddWithoutValidation("X-Boo-Sign", "d65e9db8659a2412597301b77d0b890b");
-            request.Headers.TryAddWithoutValidation("X-Date", "2022-09-08T10:16:41.794Z");
+            request.Headers.TryAddWithoutValidation("X-Client-Id", "43f796e0a0e3f917a054ac4043a19687");
+            request.Headers.TryAddWithoutValidation("X-Boo-Sign", "f8deb1d104a12145d7f4004b401777ae");
+            request.Headers.TryAddWithoutValidation("X-Date", "2022-09-09T17:15:49.708Z");
             request.Headers.TryAddWithoutValidation("Accept-Version", "v1");
             request.Headers.TryAddWithoutValidation("X-Client-Build", "220907.1446");
             request.Headers.TryAddWithoutValidation("sec-ch-ua-platform", "\"Windows\"");

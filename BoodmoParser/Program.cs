@@ -3,8 +3,11 @@ using BoodmoParser.Entities;
 using BoodmoParser.Parsers;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
+using Z.EntityFramework.Extensions;
 
 var context = ApplicationContext.GetSqlLiteContext();
+
+EntityFrameworkManager.ContextFactory = context => ApplicationContext.GetSqlLiteContext();
 
 await context.Database.EnsureCreatedAsync();
 

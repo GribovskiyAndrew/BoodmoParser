@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BoodmoParser.Entities
 {
-    public class AftermarketReplacementParts : BaseEntity
+    public class AftermarketReplacementPart : BaseEntity
     {
         public string PartsBrand { get; set; }
 

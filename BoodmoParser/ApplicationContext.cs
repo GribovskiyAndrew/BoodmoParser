@@ -43,7 +43,7 @@ namespace BoodmoParser
 
         public DbSet<Item> Item { get; set; }
 
-        public DbSet<AftermarketReplacementParts> AftermarketReplacementParts { get; set; }
+        public DbSet<AftermarketReplacementPart> AftermarketReplacementParts { get; set; }
 
         public DbSet<OEMReplacementParts> OEMReplacementParts { get; set; }
 

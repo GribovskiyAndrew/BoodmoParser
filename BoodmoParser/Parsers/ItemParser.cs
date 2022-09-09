@@ -29,18 +29,15 @@ namespace BoodmoParser.Parsers
 
                     var link1 = await _requestManager.Get($"https://boodmo.com/api/v1/customer/api/catalog/part/{id}");
 
-                    Item _item = new Item()
+                    Item item = new ()
                     {
-                        Aftermarkets = null,
-                        OEMs = null,
-                        Offers = null,
-
+                        Id = Guid.NewGuid(),
                         PartsBrand = link1["brand"]["name"].ToString(),
                         Title = link1["name"].ToString(),
-                        SoldBy = default,
+                        SoldBy = "",
                         Price = default,
                         PartNumber = number.ToString(),
-                        Origin = default,
+                        Origin = "",
                         Class = link1["family"]["name"].ToString(),
                         Description = link1["custom_attributes"]["gmc_title"].ToString(),
                     };
@@ -50,25 +47,25 @@ namespace BoodmoParser.Parsers
                     List<OffersProvided> offers = link2["items"].Select(
                          x => new OffersProvided
                          {
-                             SoldBy = x["items"]["seller"]["name"].ToString(),
-                             Price = Convert.ToDouble(x["items"]["price"]),
-                             DeliveryCharge = Convert.ToDouble(x["items"]["delivery_price"]),
-                             ItemId = _item.Id,
+                             SoldBy = x["seller"]["name"].ToString(),
+                             Price = Convert.ToDouble(x["price"].ToString()),
+                             DeliveryCharge = Convert.ToDouble(x["delivery_price"].ToString()),
+                             ItemId = item.Id,
                          }
                         ).ToList();
 
                     var link3 = await _requestManager.Get($"https://boodmo.com/api/v2/customer/api/pim/part/{id}/cross-link/list?filter%5Btype%5D=isReplacement&page%5Boffset%5D=1&page%5Blimit%5D=8");
 
-                    List<AftermarketReplacementParts> aftermarkets = link3[""].Select(
-                        x => new AftermarketReplacementParts
+                    List<AftermarketReplacementPart> aftermarkets = link3["items"].Select(
+                        x => new AftermarketReplacementPart
                         {
                             PartsBrand = x["brandName"].ToString(),
                             Title = x["name"].ToString(),
-                            Price = Convert.ToDouble(x["offerPrice"]),
+                            Price = Convert.ToDouble(x["offerPrice"].ToString()),
                             ShortNumber = x["number"].ToString(),
-                            Discount = Convert.ToInt32(x["offerSafePercent"]),
-                            OriginalPrice = Convert.ToDouble(x["offerMrp"]),
-                            ItemId = _item.Id,
+                            Discount = Convert.ToInt32(x["offerSafePercent"].ToString()),
+                            OriginalPrice = Convert.ToDouble(x["offerMrp"].ToString()),
+                            ItemId = item.Id,
                         }
                         ).ToList();
 
@@ -80,17 +77,20 @@ namespace BoodmoParser.Parsers
                             PartsBrand = x["brandName"].ToString(),
                             Title = x["name"].ToString(),
                             ShortNumber = x["number"].ToString(),
-                            Price = Convert.ToDouble(x["offerPrice"]),
-                            ItemId = _item.Id,
+                            Price = Convert.ToDouble(x["offerPrice"].ToString()),
+                            ItemId = item.Id,
                         }
                     )
                     .ToList();
 
-                    _item.OEMs = details;
-                    _item.Aftermarkets = aftermarkets;
-                    _item.Offers = offers;
+                    item.OEMReplacementParts = details;
+                    item.AftermarketReplacementParts = aftermarkets;
+                    item.Offers = offers;
+
+                    await _context.Item.SingleInsertAsync(item, (x) => { x.IncludeGraph = true; x.InsertKeepIdentity = true; });
 
                     number.Done = true;
+                    number.ItemId = item.Id;
                     await _context.SaveChangesAsync();
                 }
                 catch (Exception ex)

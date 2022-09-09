@@ -11,9 +11,11 @@ namespace BoodmoParser.Entities
 {
     public class Item : BaseEntity
     {
-        public virtual IList<AftermarketReplacementParts>? Aftermarkets { get; set; }
-        public virtual IList<OEMReplacementParts>? OEMs { get; set; }
-        public virtual IList<OffersProvided>? Offers { get; set; }
+        public virtual IList<AftermarketReplacementPart> AftermarketReplacementParts { get; set; }
+
+        public virtual IList<OEMReplacementParts> OEMReplacementParts { get; set; }
+
+        public virtual IList<OffersProvided> Offers { get; set; }
 
         public string PartsBrand { get; set; }
 
