@@ -47,7 +47,15 @@ namespace BoodmoParser.Parsers
 
                     var link2 = await _requestManager.Get($"https://boodmo.com/api/v1/customer/api/sales/part-offers/{id}");
 
-                    List<OffersProvided> offers =
+                    List<OffersProvided> offers = link2["items"].Select(
+                         x => new OffersProvided
+                         {
+                             SoldBy = x["items"]["seller"]["name"].ToString(),
+                             Price = Convert.ToDouble(x["items"]["price"]),
+                             DeliveryCharge = Convert.ToDouble(x["items"]["delivery_price"]),
+                             ItemId = _item.Id,
+                         }
+                        ).ToList();
 
                     var link3 = await _requestManager.Get($"https://boodmo.com/api/v2/customer/api/pim/part/{id}/cross-link/list?filter%5Btype%5D=isReplacement&page%5Boffset%5D=1&page%5Blimit%5D=8");
 
@@ -77,6 +85,10 @@ namespace BoodmoParser.Parsers
                         }
                     )
                     .ToList();
+
+                    _item.OEMs = details;
+                    _item.Aftermarkets = aftermarkets;
+                    _item.Offers = offers;
 
                     number.Done = true;
                     await _context.SaveChangesAsync();
