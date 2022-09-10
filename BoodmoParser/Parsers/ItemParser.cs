@@ -48,7 +48,7 @@ namespace BoodmoParser.Parsers
                          x => new OffersProvided
                          {
                              SoldBy = x["seller"]["name"].ToString(),
-                             Price = Convert.ToDouble(x["price"].ToString()),
+                             Price = Convert.ToDouble(x["price"].ToString()) / 100,
                              DeliveryCharge = Convert.ToDouble(x["delivery_price"].ToString()),
                              ItemId = item.Id,
                          }
@@ -61,10 +61,10 @@ namespace BoodmoParser.Parsers
                         {
                             PartsBrand = x["brandName"].ToString(),
                             Title = x["name"].ToString(),
-                            Price = Convert.ToDouble(x["offerPrice"].ToString()),
+                            Price = Convert.ToDouble(x["offerPrice"].ToString()) / 100,
                             ShortNumber = x["number"].ToString(),
                             Discount = Convert.ToInt32(x["offerSafePercent"].ToString()),
-                            OriginalPrice = Convert.ToDouble(x["offerMrp"].ToString()),
+                            OriginalPrice = Convert.ToDouble(x["offerMrp"].ToString()) / 100,
                             ItemId = item.Id,
                         }
                         ).ToList();
@@ -77,7 +77,7 @@ namespace BoodmoParser.Parsers
                             PartsBrand = x["brandName"].ToString(),
                             Title = x["name"].ToString(),
                             ShortNumber = x["number"].ToString(),
-                            Price = Convert.ToDouble(x["offerPrice"].ToString()),
+                            Price = Convert.ToDouble(x["offerPrice"].ToString()) / 100,
                             ItemId = item.Id,
                         }
                     )
@@ -87,11 +87,17 @@ namespace BoodmoParser.Parsers
                     item.AftermarketReplacementParts = aftermarkets;
                     item.Offers = offers;
 
+                    item.SoldBy = link2["items"][0]["seller"]["name"].ToString();
+                    item.Price = Convert.ToDouble(link2["items"][0]["price"].ToString()) / 100;
+                    //item.Origin = link2["items"][0]["family"]["name"].ToString();
+
                     await _context.Item.SingleInsertAsync(item, (x) => { x.IncludeGraph = true; x.InsertKeepIdentity = true; });
 
                     number.Done = true;
                     number.ItemId = item.Id;
                     await _context.SaveChangesAsync();
+
+
                 }
                 catch (Exception ex)
                 {

@@ -16,5 +16,7 @@ namespace BoodmoParser.Entities
         public double DeliveryCharge { get; set; }
 
         public Guid ItemId { get; set; }
+
+        public virtual Item Item { get; set; }
     }
 }

@@ -18,5 +18,7 @@ namespace BoodmoParser.Entities
         public double? Price { get; set; }
 
         public Guid ItemId { get; set; }
+
+        public virtual Item Item { get; set; }
     }
 }

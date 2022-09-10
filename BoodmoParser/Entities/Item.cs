@@ -31,6 +31,6 @@ namespace BoodmoParser.Entities
 
         public string Class { get; set; }
 
-        public string Description { get; set; }
+        public string? Description { get; set; }
     }
 }
