@@ -89,7 +89,7 @@ namespace BoodmoParser.Parsers
 
                     item.SoldBy = link2["items"][0]["seller"]["name"].ToString();
                     item.Price = Convert.ToDouble(link2["items"][0]["price"].ToString()) / 100;
-                    //item.Origin = link2["items"][0]["family"]["name"].ToString();
+                    item.Origin = Convert.ToBoolean(link1["brand"]["name"].ToString()) ? "OEM" : "Aftermarket";
 
                     await _context.Item.SingleInsertAsync(item, (x) => { x.IncludeGraph = true; x.InsertKeepIdentity = true; });
 
