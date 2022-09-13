@@ -36,8 +36,8 @@ namespace BoodmoParser.Parsers
                         Title = link1["name"].ToString(),
                         SoldBy = "",
                         Price = default,
-                        PartNumber = number.ToString(),
-                        Origin = "",
+                        PartNumber = number.Name.ToString(),
+                        Origin = Convert.ToBoolean(link1["brand"]["name"].ToString()) ? "OEM" : "Aftermarket",
                         Class = link1["family"]["name"].ToString(),
                         Description = link1["custom_attributes"]["gmc_title"].ToString(),
                     };
@@ -69,6 +69,14 @@ namespace BoodmoParser.Parsers
                         }
                         ).ToList();
 
+                    //foreach (var aftermarket in aftermarkets)
+                    //{
+                    //    //link3["items"][aftermarkets.IndexOf(aftermarket)]["id"]
+
+                    //    var sparePart = await _requestManager.Get($"https://boodmo.com/api/v1/customer/api/catalog/part/{link3["items"][aftermarkets.IndexOf(aftermarket)]["id"]}");
+
+                    //}
+
                     var link4 = await _requestManager.Get($"https://boodmo.com/api/v2/customer/api/pim/part/{id}/cross-link/list?filter%5Btype%5D=isOemReplacement&page%5Boffset%5D=1&page%5Blimit%5D=8");
 
                     List<OEMReplacementParts> details = link4["items"].Select(
@@ -89,7 +97,6 @@ namespace BoodmoParser.Parsers
 
                     item.SoldBy = link2["items"][0]["seller"]["name"].ToString();
                     item.Price = Convert.ToDouble(link2["items"][0]["price"].ToString()) / 100;
-                    item.Origin = Convert.ToBoolean(link1["brand"]["name"].ToString()) ? "OEM" : "Aftermarket";
 
                     await _context.Item.SingleInsertAsync(item, (x) => { x.IncludeGraph = true; x.InsertKeepIdentity = true; });
 
