@@ -29,7 +29,7 @@ namespace BoodmoParser.Parsers
 
                     var link1 = await _requestManager.Get($"https://boodmo.com/api/v1/customer/api/catalog/part/{id}");
 
-                    Item item = new ()
+                    Item item = new()
                     {
                         Id = Guid.NewGuid(),
                         PartsBrand = link1["brand"]["name"].ToString(),
@@ -37,7 +37,7 @@ namespace BoodmoParser.Parsers
                         SoldBy = "",
                         Price = default,
                         PartNumber = number.Name.ToString(),
-                        Origin = Convert.ToBoolean(link1["brand"]["name"].ToString()) ? "OEM" : "Aftermarket",
+                        Origin = Convert.ToBoolean(link1["brand"]["oem"].ToString()) ? "OEM" : "Aftermarket",
                         Class = link1["family"]["name"].ToString(),
                         Description = link1["custom_attributes"]["gmc_title"].ToString(),
                     };
