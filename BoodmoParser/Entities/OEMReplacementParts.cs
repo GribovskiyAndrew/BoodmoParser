@@ -13,7 +13,7 @@ namespace BoodmoParser.Entities
 
         public string Title { get; set; }
 
-        public string ShortNumber { get; set; }
+        public string PartNumber { get; set; }
 
         public double? Price { get; set; }
 
