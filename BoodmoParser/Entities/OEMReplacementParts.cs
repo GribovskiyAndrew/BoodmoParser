@@ -1,9 +1,4 @@
 ﻿using Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BoodmoParser.Entities
 {
@@ -17,7 +12,7 @@ namespace BoodmoParser.Entities
 
         public double? Price { get; set; }
 
-        public Guid ItemId { get; set; }
+        public int ItemId { get; set; }
 
         public virtual Item Item { get; set; }
     }

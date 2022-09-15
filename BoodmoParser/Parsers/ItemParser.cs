@@ -1,11 +1,6 @@
 ﻿using BoodmoParser.Entities;
-using BoodmoParser.Parsers;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 
 namespace BoodmoParser.Parsers
 {
@@ -31,7 +26,6 @@ namespace BoodmoParser.Parsers
 
                     Item item = new()
                     {
-                        Id = Guid.NewGuid(),
                         PartsBrand = link1["brand"]["name"].ToString(),
                         Title = link1["name"].ToString(),
                         SoldBy = "",
@@ -41,8 +35,6 @@ namespace BoodmoParser.Parsers
                         Class = link1["family"]["name"].ToString(),
                         Description = link1["custom_attributes"]["gmc_title"].ToString(),
                     };
-
-                    //https://boodmo.com/api/v1/customer/api/sales/part-offers/{id}?filter%5Bpin%5D=370040
 
                     var link2 = await _requestManager.Get($"https://boodmo.com/api/v1/customer/api/sales/part-offers/{id}");
 
@@ -73,8 +65,6 @@ namespace BoodmoParser.Parsers
 
                     foreach (var aftermarket in aftermarkets)
                     {
-                        //link3["items"][aftermarkets.IndexOf(aftermarket)]["id"]
-
                         var sparePart = await _requestManager.Get($"https://boodmo.com/api/v1/customer/api/catalog/part/{link3["items"][aftermarkets.IndexOf(aftermarket)]["id"]}");
 
                         aftermarket.PartNumber = sparePart["number"].ToString();
@@ -96,8 +86,6 @@ namespace BoodmoParser.Parsers
 
                     foreach (var detail in details)
                     {
-                        //link4["items"][aftermarkets.IndexOf(aftermarket)]["id"]
-
                         var sparePart = await _requestManager.Get($"https://boodmo.com/api/v1/customer/api/catalog/part/{link4["items"][details.IndexOf(detail)]["id"]}");
 
                         detail.PartNumber = sparePart["number"].ToString();
@@ -116,16 +104,22 @@ namespace BoodmoParser.Parsers
                     number.ItemId = item.Id;
                     await _context.SaveChangesAsync();
 
-
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
             }
-
         }
 
+        private async void GetNumber(dynamic details, JObject link)
+        {
+            foreach (var detail in details)
+            {
+                var sparePart = await _requestManager.Get($"https://boodmo.com/api/v1/customer/api/catalog/part/{link["items"][details.IndexOf(detail)]["id"]}");
 
+                detail.PartNumber = sparePart["number"].ToString();
+            }
+        }
     }
 }
