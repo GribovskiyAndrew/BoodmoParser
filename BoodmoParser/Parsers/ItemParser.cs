@@ -1,7 +1,7 @@
 ﻿using BoodmoParser.Entities;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 
 namespace BoodmoParser.Parsers
 {
@@ -15,7 +15,7 @@ namespace BoodmoParser.Parsers
             _queue = new ConcurrentQueue<dynamic>(
                 _context.Numbers
                 .Where(x => !x.Done)
-                .Select(x => new { x.Name, x.Id })
+                .Select(x => new { x.Name, x.Id})
                 .ToList());
         }
 
@@ -112,12 +112,11 @@ namespace BoodmoParser.Parsers
                             item.SoldBy = link2["items"][0]["seller"]["name"].ToString();
                             item.Price = Convert.ToDouble(link2["items"][0]["price"].ToString()) / 100;
 
-                            await _context.Item.SingleInsertAsync(item, (x) => { x.IncludeGraph = true; x.InsertKeepIdentity = true; });
+                            using var context = ApplicationContext.GetSqlLiteContext();
+                            context.Item.Add(item);
+                            context.SaveChanges();
 
-                            part.Done = true;
-                            part.ItemId = item.Id;
-                            await _context.SaveChangesAsync();
-
+                            await context.Database.ExecuteSqlRawAsync($@"UPDATE Numbers SET Done = 1, ItemId = {item.Id} Where Id = {part.Id}");
                         }
                         catch (Exception ex)
                         {
@@ -128,7 +127,6 @@ namespace BoodmoParser.Parsers
             }
 
             await Task.WhenAll(
-                Parse(),
                 Parse(),
                 Parse(),
                 Parse(),

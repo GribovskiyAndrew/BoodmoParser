@@ -80,13 +80,14 @@ namespace BoodmoParser
             request.Headers.TryAddWithoutValidation("X-Client-App", "web");
             request.Headers.TryAddWithoutValidation("Accept", "application/json, text/plain, */*");
             request.Headers.TryAddWithoutValidation("Referer", "https://boodmo.com/");
-            request.Headers.TryAddWithoutValidation("X-Client-Id", "e3d9bcb2915ce83b40a3a90724e12b0b");
             request.Headers.TryAddWithoutValidation("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36");
-            request.Headers.TryAddWithoutValidation("X-Date", "2022-09-17T13:00:55.039Z");
             request.Headers.TryAddWithoutValidation("Accept-Version", "v1");
-            request.Headers.TryAddWithoutValidation("X-Client-Build", "220912.1615");
-            request.Headers.TryAddWithoutValidation("X-Boo-Sign", "5bf30ed016a4985ae418bb404111ef9b");
             request.Headers.TryAddWithoutValidation("sec-ch-ua-platform", "\"Windows\"");
+            request.Headers.TryAddWithoutValidation("X-Client-Build", "220912.1615");
+
+            request.Headers.TryAddWithoutValidation("X-Date", "2022-09-17T13:00:55.039Z");
+            request.Headers.TryAddWithoutValidation("X-Boo-Sign", "5bf30ed016a4985ae418bb404111ef9b");
+            request.Headers.TryAddWithoutValidation("X-Client-Id", "e3d9bcb2915ce83b40a3a90724e12b0b");
         }
 
         public async Task<JObject> Get(string url)
