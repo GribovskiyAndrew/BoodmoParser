@@ -1,9 +1,10 @@
 ﻿
+using System.Net.Http.Headers;
+
 namespace BoodmoParser.Parsers
 {
     public abstract class BaseParser
     {
-
         protected readonly RequestManager _requestManager;
         protected readonly ApplicationContext _context;
 
@@ -12,5 +13,6 @@ namespace BoodmoParser.Parsers
             _requestManager = requestManager;
             _context = context;
         }
+
     }
 }
