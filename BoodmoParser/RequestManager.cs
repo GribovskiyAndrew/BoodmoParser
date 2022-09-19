@@ -76,18 +76,17 @@ namespace BoodmoParser
             request.Headers.TryAddWithoutValidation("X-Client-Version", "4.3.1");
             request.Headers.TryAddWithoutValidation("sec-ch-ua-mobile", "?0");
             request.Headers.TryAddWithoutValidation("X-Api", "CustomerAPI");
-            request.Headers.TryAddWithoutValidation("Authorization", "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjJkMjNmMzc0MDI1ZWQzNTNmOTg0YjUxMWE3Y2NlNDlhMzFkMzFiZDIiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoic2hhc2hpayBLaGV0YW5pIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FJdGJ2bWtGWC0yNWhTR1M0U1pvNE12UlpIWWpkelBtc1QxM1lFQkd4aElpPXM5Ni1jIiwiY2lkIjoxNzkyMTA0LCJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vYm9vZG1vLXRlc3QiLCJhdWQiOiJib29kbW8tdGVzdCIsImF1dGhfdGltZSI6MTY2MzA3OTM2NSwidXNlcl9pZCI6IjE3OTIxMDQiLCJzdWIiOiIxNzkyMTA0IiwiaWF0IjoxNjYzNDE5NjQ4LCJleHAiOjE2NjM0MjMyNDgsImVtYWlsIjoic2hhc2hpa2toZXRhbmlAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInBob25lX251bWJlciI6Iis5MTc2MjMwMzg1NTYiLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7InBob25lIjpbIis5MTc2MjMwMzg1NTYiXSwiZW1haWwiOlsic2hhc2hpa2toZXRhbmlAZ21haWwuY29tIl19LCJzaWduX2luX3Byb3ZpZGVyIjoicGhvbmUifX0.BYGfF_35Phu_l5EzHmb-kg8t0rp-vJ3AHH6UZ6zr_XjcOsH6-mW95olVCqdwEjgD3QvEf7ttHVBTadfH_h4eFSlNWmUruZjNfaktyBz_-RfqMC8hkBHZniJpSqfg0QWJL5MlNS1fR0Zq36eICPHUdoAoIb86VDjmUsIoZmaIZC7Lmgi2KqSEJvuYM6elEU8njBb-_OfSspgmZN1Ks-_U81MzGegeTV36k-WZXeR0lxg91DCtvrqut8CZy9Q3SN4syHkE5qQUA1Hc1L9c3u-rPmT1cIAitXkzt8HpuqBPXYfb7eoL84QkSuEI--kOBvZoFQZmpTiQaixLCHOJtxy1FQ");
+            request.Headers.TryAddWithoutValidation("Authorization", "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjJkMjNmMzc0MDI1ZWQzNTNmOTg0YjUxMWE3Y2NlNDlhMzFkMzFiZDIiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoic2hhc2hpayBLaGV0YW5pIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FJdGJ2bWtGWC0yNWhTR1M0U1pvNE12UlpIWWpkelBtc1QxM1lFQkd4aElpPXM5Ni1jIiwiY2lkIjoxNzkyMTA0LCJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vYm9vZG1vLXRlc3QiLCJhdWQiOiJib29kbW8tdGVzdCIsImF1dGhfdGltZSI6MTY2MzA3OTM2NSwidXNlcl9pZCI6IjE3OTIxMDQiLCJzdWIiOiIxNzkyMTA0IiwiaWF0IjoxNjYzNTc5NzY4LCJleHAiOjE2NjM1ODMzNjgsImVtYWlsIjoic2hhc2hpa2toZXRhbmlAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInBob25lX251bWJlciI6Iis5MTc2MjMwMzg1NTYiLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7InBob25lIjpbIis5MTc2MjMwMzg1NTYiXSwiZW1haWwiOlsic2hhc2hpa2toZXRhbmlAZ21haWwuY29tIl19LCJzaWduX2luX3Byb3ZpZGVyIjoicGhvbmUifX0.RAzSB5ReLLIAk_a6HZCNy1eafkFxZonTM8U68iPH-E1eLFocKg2QvpvkviODDP3oww5NhTAe00C_pVtl0F0HR77Uy3nz2xXrHTvGtc1wr11h7UG3oxicWgl911HYTAXgTnyxarg7okGJyOJ93FNJAxppHeTA3biMxC1uMKPtjyNto-PJhn42g0VDhbQIDOtyMf5nqlB9Om4BDqW1m6QCuuKSlFHEzGBPHSJhSKpOeGGaI83TwzgJAma1_8NiG9Uh0Nway8PqblJ_DlPecda9LG_y8kAbyxWuVAJ-1MjYV8NVyUQsfGNds7jrpbcfl1KM7FMX0NcFdnSPenzx9ydD8Q");
             request.Headers.TryAddWithoutValidation("X-Client-App", "web");
             request.Headers.TryAddWithoutValidation("Accept", "application/json, text/plain, */*");
             request.Headers.TryAddWithoutValidation("Referer", "https://boodmo.com/");
-            request.Headers.TryAddWithoutValidation("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36");
-            request.Headers.TryAddWithoutValidation("Accept-Version", "v1");
-            request.Headers.TryAddWithoutValidation("sec-ch-ua-platform", "\"Windows\"");
-            request.Headers.TryAddWithoutValidation("X-Client-Build", "220912.1615");
-
-            request.Headers.TryAddWithoutValidation("X-Date", "2022-09-17T13:00:55.039Z");
-            request.Headers.TryAddWithoutValidation("X-Boo-Sign", "5bf30ed016a4985ae418bb404111ef9b");
             request.Headers.TryAddWithoutValidation("X-Client-Id", "e3d9bcb2915ce83b40a3a90724e12b0b");
+            request.Headers.TryAddWithoutValidation("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36");
+            request.Headers.TryAddWithoutValidation("X-Date", "2022-09-19T09:29:30.220Z");
+            request.Headers.TryAddWithoutValidation("Accept-Version", "v1");
+            request.Headers.TryAddWithoutValidation("X-Client-Build", "220912.1615");
+            request.Headers.TryAddWithoutValidation("X-Boo-Sign", "48bb8b6cd980773fa616afac25956755");
+            request.Headers.TryAddWithoutValidation("sec-ch-ua-platform", "\"Windows\"");
         }
 
         public async Task<JObject> Get(string url)

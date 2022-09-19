@@ -14,9 +14,9 @@ namespace BoodmoParser.Entities
 
         public string Title { get; set; }
 
-        public string SoldBy { get; set; }
+        public string? SoldBy { get; set; }
 
-        public double Price { get; set; }
+        public double? Price { get; set; }
 
         public string PartNumber { get; set; }
 
