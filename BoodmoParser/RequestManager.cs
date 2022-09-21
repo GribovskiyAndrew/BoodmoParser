@@ -61,16 +61,16 @@ namespace BoodmoParser
             request.Headers.TryAddWithoutValidation("X-Client-Version", "4.3.1");
             request.Headers.TryAddWithoutValidation("sec-ch-ua-mobile", "?0");
             request.Headers.TryAddWithoutValidation("X-Api", "CustomerAPI");
-            request.Headers.TryAddWithoutValidation("Authorization", "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjJkMjNmMzc0MDI1ZWQzNTNmOTg0YjUxMWE3Y2NlNDlhMzFkMzFiZDIiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoic2hhc2hpayBLaGV0YW5pIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FJdGJ2bWtGWC0yNWhTR1M0U1pvNE12UlpIWWpkelBtc1QxM1lFQkd4aElpPXM5Ni1jIiwiY2lkIjoxNzkyMTA0LCJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vYm9vZG1vLXRlc3QiLCJhdWQiOiJib29kbW8tdGVzdCIsImF1dGhfdGltZSI6MTY2MzA3OTM2NSwidXNlcl9pZCI6IjE3OTIxMDQiLCJzdWIiOiIxNzkyMTA0IiwiaWF0IjoxNjYzNTk3ODE1LCJleHAiOjE2NjM2MDE0MTUsImVtYWlsIjoic2hhc2hpa2toZXRhbmlAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInBob25lX251bWJlciI6Iis5MTc2MjMwMzg1NTYiLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7InBob25lIjpbIis5MTc2MjMwMzg1NTYiXSwiZW1haWwiOlsic2hhc2hpa2toZXRhbmlAZ21haWwuY29tIl19LCJzaWduX2luX3Byb3ZpZGVyIjoicGhvbmUifX0.j4hbUkB2q6--4cqhOn4n0kjZZ8iYVNy-yMYdzSgtAitgW-hq2uZER3AIxmhTVJmhxAeWMYoBIDgHFZ58FiyoVC_k4lPqtHRhEE8GsVV3cCZxXufh5bZlbrcZtPOPCiK3eDY5mhIJVakXaGtHYigg1BClm6sJ9R5PHOgPMHVip5SmYxn-t2vP7tKCcoYmz33UNCIKeHpw2sXJyw5f8rwLC54JRWZHi5Ao0V0kHScZY-F0r0eSSLj0PIiUAhS1R7ki2nbfJi3WffES6gFSgP9Q0Yb2UPLGtjrCHJNRs-iO7WtnicYU2dx3qcFHUheOu36n9yZGflzwwc8rZ6Leuuu76A");
+            request.Headers.TryAddWithoutValidation("Authorization", "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjIxZTZjMGM2YjRlMzA5NTI0N2MwNjgwMDAwZTFiNDMxODIzODZkNTAiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoic2hhc2hpayBLaGV0YW5pIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FJdGJ2bWtGWC0yNWhTR1M0U1pvNE12UlpIWWpkelBtc1QxM1lFQkd4aElpPXM5Ni1jIiwiY2lkIjoxNzkyMTA0LCJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vYm9vZG1vLXRlc3QiLCJhdWQiOiJib29kbW8tdGVzdCIsImF1dGhfdGltZSI6MTY2MzA3OTM2NSwidXNlcl9pZCI6IjE3OTIxMDQiLCJzdWIiOiIxNzkyMTA0IiwiaWF0IjoxNjYzNzYwNDY5LCJleHAiOjE2NjM3NjQwNjksImVtYWlsIjoic2hhc2hpa2toZXRhbmlAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInBob25lX251bWJlciI6Iis5MTc2MjMwMzg1NTYiLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7InBob25lIjpbIis5MTc2MjMwMzg1NTYiXSwiZW1haWwiOlsic2hhc2hpa2toZXRhbmlAZ21haWwuY29tIl19LCJzaWduX2luX3Byb3ZpZGVyIjoicGhvbmUifX0.OM2-5D1dxez0R9Qx9Au8HCY0qS87JyqFyjSdXAtCkeWBL2JOj-k9_JBrFqPxI9B7ttYF7qm4TTwkNG0JUdPD-uzBym_zFsVs_FpJTP42rNscmgeJLlSr8zHPkCM-taDoFAm-yEgYMTd66bZvdfnN42dDlgdaZZO9NGHMBkc-uDrurj_eFuS8Jc6aUr-AjD6wM47EO3gA79DHh1-wNiXd4ZWCcrlp4B6E4pWRSbsyZ71Pff-QwGIAEC4NtZvz3TSklxQF1RoSRbIkmN91j941nAwgHbw6178AThCmMNkO6pQogDjUx5IS7H_LhmQkelZ11fh_3Yph4N5mH238MYy6hA");
             request.Headers.TryAddWithoutValidation("X-Client-App", "web");
             request.Headers.TryAddWithoutValidation("Accept", "application/json, text/plain, */*");
             request.Headers.TryAddWithoutValidation("Referer", "https://boodmo.com/");
             request.Headers.TryAddWithoutValidation("X-Client-Id", "e3d9bcb2915ce83b40a3a90724e12b0b");
             request.Headers.TryAddWithoutValidation("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36");
-            request.Headers.TryAddWithoutValidation("X-Date", "2022-09-19T14:30:33.447Z");
+            request.Headers.TryAddWithoutValidation("X-Date", "2022-09-21T11:41:08.776Z");
             request.Headers.TryAddWithoutValidation("Accept-Version", "v1");
             request.Headers.TryAddWithoutValidation("X-Client-Build", "220912.1615");
-            request.Headers.TryAddWithoutValidation("X-Boo-Sign", "3acf08857b7209977aa22cfdd0395bbf");
+            request.Headers.TryAddWithoutValidation("X-Boo-Sign", "2791fc56376391617f0fbe85bc106e3b");
             request.Headers.TryAddWithoutValidation("sec-ch-ua-platform", "\"Windows\"");
         }
 

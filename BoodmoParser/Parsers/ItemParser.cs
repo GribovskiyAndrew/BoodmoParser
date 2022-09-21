@@ -55,11 +55,14 @@ namespace BoodmoParser.Parsers
 
                             var imgName = link1["image"].ToString();
 
-                            imgName = imgName.Substring(0, imgName.LastIndexOf('.')) + ".png";
+                            if (imgName != null && imgName.Length != 0)
+                            {
+                                imgName = imgName.Substring(0, imgName.LastIndexOf('.')) + ".png";
 
-                            await _requestManager.SaveImage(imgName);
+                                await _requestManager.SaveImage(imgName);
 
-                            item.ImageName = imgName.Substring(imgName.LastIndexOf('/') + 1);
+                                item.ImageName = imgName.Substring(imgName.LastIndexOf('/') + 1);
+                            }
 
                             var link2 = await _requestManager.Get($"https://boodmo.com/api/v1/customer/api/sales/part-offers/{id}");
 
