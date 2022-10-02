@@ -15,6 +15,15 @@ namespace BoodmoParser
             var handler = new HttpClientHandler();
             handler.UseCookies = false;
 
+            handler.Proxy = new WebProxy()
+            {
+                Address = new Uri($"http://193.39.88.249:8800"),
+                BypassProxyOnLocal = false,
+                UseDefaultCredentials = false,
+
+                Credentials = new NetworkCredential(userName: "161891", password: "9s2bvJEmMaN")
+            };
+
             handler.AutomaticDecompression = ~DecompressionMethods.None;
 
             _httpClient = new HttpClient(handler);
@@ -58,19 +67,19 @@ namespace BoodmoParser
         private void AddHeaders(HttpRequestMessage request)
         {
             request.Headers.TryAddWithoutValidation("sec-ch-ua", "\"Google Chrome\";v=\"105\", \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"105\"");
-            request.Headers.TryAddWithoutValidation("X-Client-Version", "4.3.1");
+            request.Headers.TryAddWithoutValidation("X-Client-Version", "4.4.1");
             request.Headers.TryAddWithoutValidation("sec-ch-ua-mobile", "?0");
             request.Headers.TryAddWithoutValidation("X-Api", "CustomerAPI");
-            request.Headers.TryAddWithoutValidation("Authorization", "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjIxZTZjMGM2YjRlMzA5NTI0N2MwNjgwMDAwZTFiNDMxODIzODZkNTAiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoic2hhc2hpayBLaGV0YW5pIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FJdGJ2bWtGWC0yNWhTR1M0U1pvNE12UlpIWWpkelBtc1QxM1lFQkd4aElpPXM5Ni1jIiwiY2lkIjoxNzkyMTA0LCJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vYm9vZG1vLXRlc3QiLCJhdWQiOiJib29kbW8tdGVzdCIsImF1dGhfdGltZSI6MTY2MzA3OTM2NSwidXNlcl9pZCI6IjE3OTIxMDQiLCJzdWIiOiIxNzkyMTA0IiwiaWF0IjoxNjYzNzYwNDY5LCJleHAiOjE2NjM3NjQwNjksImVtYWlsIjoic2hhc2hpa2toZXRhbmlAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInBob25lX251bWJlciI6Iis5MTc2MjMwMzg1NTYiLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7InBob25lIjpbIis5MTc2MjMwMzg1NTYiXSwiZW1haWwiOlsic2hhc2hpa2toZXRhbmlAZ21haWwuY29tIl19LCJzaWduX2luX3Byb3ZpZGVyIjoicGhvbmUifX0.OM2-5D1dxez0R9Qx9Au8HCY0qS87JyqFyjSdXAtCkeWBL2JOj-k9_JBrFqPxI9B7ttYF7qm4TTwkNG0JUdPD-uzBym_zFsVs_FpJTP42rNscmgeJLlSr8zHPkCM-taDoFAm-yEgYMTd66bZvdfnN42dDlgdaZZO9NGHMBkc-uDrurj_eFuS8Jc6aUr-AjD6wM47EO3gA79DHh1-wNiXd4ZWCcrlp4B6E4pWRSbsyZ71Pff-QwGIAEC4NtZvz3TSklxQF1RoSRbIkmN91j941nAwgHbw6178AThCmMNkO6pQogDjUx5IS7H_LhmQkelZ11fh_3Yph4N5mH238MYy6hA");
+            request.Headers.TryAddWithoutValidation("Authorization", "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjU4NWI5MGI1OWM2YjM2ZDNjOTBkZjBlOTEwNDQ1M2U2MmY4ODdmNzciLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoic2hhc2hpayBLaGV0YW5pIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FJdGJ2bWtGWC0yNWhTR1M0U1pvNE12UlpIWWpkelBtc1QxM1lFQkd4aElpPXM5Ni1jIiwiY2lkIjoxNzkyMTA0LCJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vYm9vZG1vLXRlc3QiLCJhdWQiOiJib29kbW8tdGVzdCIsImF1dGhfdGltZSI6MTY2NDM1MDcwNSwidXNlcl9pZCI6IjE3OTIxMDQiLCJzdWIiOiIxNzkyMTA0IiwiaWF0IjoxNjY0NzQ1MDQ2LCJleHAiOjE2NjQ3NDg2NDYsImVtYWlsIjoic2hhc2hpa2toZXRhbmlAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInBob25lX251bWJlciI6Iis5MTc2MjMwMzg1NTYiLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7InBob25lIjpbIis5MTc2MjMwMzg1NTYiXSwiZW1haWwiOlsic2hhc2hpa2toZXRhbmlAZ21haWwuY29tIl19LCJzaWduX2luX3Byb3ZpZGVyIjoicGhvbmUifX0.meImcVXHrdtAyChkgvh_Cp9zixhIp-XdkOKHdI9S05iD1MOb3ibeLwZzffy7FbXMambFVMDZ3VmywOZbIC6ASo_SJrs0zPFEaptpkIAKtH8RyLXxy05fr4d79meLFxehJXsk1DkoI2ulHGBY3kgPS5WAvO4LCZWqT-e46AjyKLSDP116qC_3-5cILCibGtQZH3xHWU5l46postRSNZfupUtZgxHm4ZFkkD8R8wUGOV8Eu7IbrRTgrumWm6Nn4HLfGtPz32XErPHjgguzKyw8RQhXB_Ml2umn-FBDRxh-uW9b4KFMG9_ajtu7cbXdHo-2nBhaW0v6sTaGJQAY8b425A");
             request.Headers.TryAddWithoutValidation("X-Client-App", "web");
             request.Headers.TryAddWithoutValidation("Accept", "application/json, text/plain, */*");
             request.Headers.TryAddWithoutValidation("Referer", "https://boodmo.com/");
             request.Headers.TryAddWithoutValidation("X-Client-Id", "e3d9bcb2915ce83b40a3a90724e12b0b");
             request.Headers.TryAddWithoutValidation("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36");
-            request.Headers.TryAddWithoutValidation("X-Date", "2022-09-21T11:41:08.776Z");
+            request.Headers.TryAddWithoutValidation("X-Date", "2022-10-02T21:10:47.177Z");
             request.Headers.TryAddWithoutValidation("Accept-Version", "v1");
-            request.Headers.TryAddWithoutValidation("X-Client-Build", "220912.1615");
-            request.Headers.TryAddWithoutValidation("X-Boo-Sign", "2791fc56376391617f0fbe85bc106e3b");
+            request.Headers.TryAddWithoutValidation("X-Client-Build", "220928.1448");
+            request.Headers.TryAddWithoutValidation("X-Boo-Sign", "62daa200ab060d19a547f0adbce5493a");
             request.Headers.TryAddWithoutValidation("sec-ch-ua-platform", "\"Windows\"");
         }
 

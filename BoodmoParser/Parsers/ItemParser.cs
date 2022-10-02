@@ -30,7 +30,7 @@ namespace BoodmoParser.Parsers
 
                     if (ok)
                     {
-                        if (part.Name.Length < 11)
+                        if (part.Name.Length < 7)
                             continue;
 
                         try
@@ -59,7 +59,7 @@ namespace BoodmoParser.Parsers
                             {
                                 imgName = imgName.Substring(0, imgName.LastIndexOf('.')) + ".png";
 
-                                await _requestManager.SaveImage(imgName);
+                                //await _requestManager.SaveImage(imgName);
 
                                 item.ImageName = imgName.Substring(imgName.LastIndexOf('/') + 1);
                             }
@@ -77,7 +77,7 @@ namespace BoodmoParser.Parsers
                                 ).ToList();
 
                             var link3 = await _requestManager.Get($"https://boodmo.com/api/v2/customer/api/pim/part/{id}/cross-link/list?filter%5Btype%5D=isReplacement&page%5Boffset%5D=1&page%5Blimit%5D=8");
-
+                            https://boodmo.com/api/v2/customer/api/pim/part/36619363/cross-link/list?filter%5Btype%5D=isReplacement&page%5Boffset%5D=2&page%5Blimit%5D=8&pin=370040
                             List<AftermarketReplacementPart> aftermarkets = link3["items"].Select(
                                 x => new AftermarketReplacementPart
                                 {
