@@ -1,4 +1,5 @@
 ﻿using Entities;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BoodmoParser.Entities
 {
@@ -19,5 +20,8 @@ namespace BoodmoParser.Entities
         public int ItemId { get; set; }
 
         public virtual Item Item { get; set; }
+
+        [NotMapped]
+        public int StoreId { get; set; }
     }
 }

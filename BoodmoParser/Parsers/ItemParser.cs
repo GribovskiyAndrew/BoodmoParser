@@ -36,6 +36,9 @@ namespace BoodmoParser.Parsers
                         try
                         {
                             var search = await _requestManager.Get($"https://boodmo.com/api/v1/customer/api/pim/part/search?searchQuery={part.Name}&sort=new&page%5Boffset%5D=1&page%5Blimit%5D=48");
+                            
+                            if (Convert.ToInt32(search["list"]["size"].ToString()) != 1)
+                                continue;
 
                             var id = search["items"].First()["id"].ToString();
 
@@ -51,18 +54,19 @@ namespace BoodmoParser.Parsers
                                 Origin = Convert.ToBoolean(link1["brand"]["oem"].ToString()) ? "OEM" : "Aftermarket",
                                 Class = link1["family"]["name"].ToString(),
                                 Description = link1["custom_attributes"]["gmc_title"].ToString(),
+                                ImageName = link1["image"].ToString(),
                             };
 
-                            var imgName = link1["image"].ToString();
+                            //var imgName = link1["image"].ToString();
 
-                            if (imgName != null && imgName.Length != 0)
-                            {
-                                imgName = imgName.Substring(0, imgName.LastIndexOf('.')) + ".png";
+                            //if (imgName != null && imgName.Length != 0)
+                            //{
+                            //    imgName = imgName.Substring(0, imgName.LastIndexOf('.')) + ".png";
 
-                                //await _requestManager.SaveImage(imgName);
+                            //    //await _requestManager.SaveImage(imgName);
 
-                                item.ImageName = imgName.Substring(imgName.LastIndexOf('/') + 1);
-                            }
+                            //    item.ImageName = imgName.Substring(imgName.LastIndexOf('/') + 1);
+                            //}
 
                             var link2 = await _requestManager.Get($"https://boodmo.com/api/v1/customer/api/sales/part-offers/{id}");
 
@@ -76,51 +80,89 @@ namespace BoodmoParser.Parsers
                                  }
                                 ).ToList();
 
-                            var link3 = await _requestManager.Get($"https://boodmo.com/api/v2/customer/api/pim/part/{id}/cross-link/list?filter%5Btype%5D=isReplacement&page%5Boffset%5D=1&page%5Blimit%5D=8");
-                            https://boodmo.com/api/v2/customer/api/pim/part/36619363/cross-link/list?filter%5Btype%5D=isReplacement&page%5Boffset%5D=2&page%5Blimit%5D=8&pin=370040
-                            List<AftermarketReplacementPart> aftermarkets = link3["items"].Select(
-                                x => new AftermarketReplacementPart
-                                {
-                                    PartsBrand = x["brandName"].ToString(),
-                                    Title = x["name"].ToString(),
-                                    Price = Convert.ToDouble(x["offerPrice"].ToString()) / 100,
-                                    PartNumber = x["number"].ToString(),
-                                    Discount = Convert.ToInt32(x["offerSafePercent"].ToString()),
-                                    OriginalPrice = Convert.ToDouble(x["offerMrp"].ToString()) / 100,
-                                    ItemId = item.Id,
-                                }
-                                ).ToList();
+                            var count = await _requestManager.Get($"https://boodmo.com/api/v1/customer/api/pim/part/{id}/cross-link/count");
 
-                            foreach (var aftermarket in aftermarkets)
+                            int limitReplacement = Convert.ToInt32(count["isReplacementCount"].ToString());
+
+                            if (limitReplacement > 0)
                             {
-                                var sparePart = await _requestManager.Get($"https://boodmo.com/api/v1/customer/api/catalog/part/{link3["items"][aftermarkets.IndexOf(aftermarket)]["id"]}");
+                                List<AftermarketReplacementPart> aftermarkets = new List<AftermarketReplacementPart>();
 
-                                aftermarket.PartNumber = sparePart["number"].ToString();
+                                int i = 1;
+
+                                while (limitReplacement > 0)
+                                {
+                                    var link3 = await _requestManager.Get($"https://boodmo.com/api/v2/customer/api/pim/part/{id}/cross-link/list?filter%5Btype%5D=isReplacement&page%5Boffset%5D=1&page%5Blimit%5D=48");
+
+                                    foreach (var aftermaket in link3["items"])
+                                    {
+                                        aftermarkets.Add(
+                                            new AftermarketReplacementPart
+                                            {
+                                                PartsBrand = aftermaket["brandName"].ToString(),
+                                                Title = aftermaket["name"].ToString(),
+                                                Price = Convert.ToDouble(aftermaket["offerPrice"].ToString()) / 100,
+                                                PartNumber = aftermaket["number"].ToString(),
+                                                Discount = Convert.ToInt32(aftermaket["offerSafePercent"].ToString()),
+                                                OriginalPrice = Convert.ToDouble(aftermaket["offerMrp"].ToString()) / 100,
+                                                ItemId = item.Id,
+                                                StoreId = Convert.ToInt32(aftermaket["id"].ToString()),
+                                            });
+                                    }
+
+                                    limitReplacement -= 48;
+                                    i++;
+                                }
+
+                                foreach (var aftermarket in aftermarkets)
+                                {
+                                    var sparePart = await _requestManager.Get($"https://boodmo.com/api/v1/customer/api/catalog/part/{aftermarket.StoreId.ToString()}");
+
+                                    aftermarket.PartNumber = sparePart["number"].ToString();
+                                }
+
+                                item.AftermarketReplacementParts = aftermarkets;
                             }
 
-                            var link4 = await _requestManager.Get($"https://boodmo.com/api/v2/customer/api/pim/part/{id}/cross-link/list?filter%5Btype%5D=isOemReplacement&page%5Boffset%5D=1&page%5Blimit%5D=8");
+                            int limitOemReplacement = Convert.ToInt32(count["isOemReplacementCount"].ToString());
 
-                            List<OEMReplacementParts> details = link4["items"].Select(
-                                x => new OEMReplacementParts
-                                {
-                                    PartsBrand = x["brandName"].ToString(),
-                                    Title = x["name"].ToString(),
-                                    PartNumber = x["number"].ToString(),
-                                    Price = Convert.ToDouble(x["offerPrice"].ToString()) / 100,
-                                    ItemId = item.Id,
-                                }
-                            )
-                            .ToList();
-
-                            foreach (var detail in details)
+                            if (limitOemReplacement > 0)
                             {
-                                var sparePart = await _requestManager.Get($"https://boodmo.com/api/v1/customer/api/catalog/part/{link4["items"][details.IndexOf(detail)]["id"]}");
+                                List<OEMReplacementParts> details = new List<OEMReplacementParts>();
 
-                                detail.PartNumber = sparePart["number"].ToString();
+                                int i = 1;
+
+                                while(limitOemReplacement > 0)
+                                {
+                                    var link4 = await _requestManager.Get($"https://boodmo.com/api/v2/customer/api/pim/part/{id}/cross-link/list?filter%5Btype%5D=isOemReplacement&page%5Boffset%5D={i}&page%5Blimit%5D=48");
+
+                                    foreach(var oem in link4["items"])
+                                    {
+                                        details.Add(new OEMReplacementParts
+                                        {
+                                            PartsBrand = oem["brandName"].ToString(),
+                                            Title = oem["name"].ToString(),
+                                            PartNumber = oem["number"].ToString(),
+                                            Price = Convert.ToDouble(oem["offerPrice"].ToString()) / 100,
+                                            ItemId = item.Id,
+                                            StoreId = Convert.ToInt32(oem["id"].ToString()),
+                                        });
+                                    }
+
+                                    limitOemReplacement -= 48;
+                                    i++;
+                                }
+
+                                foreach (var detail in details)
+                                {
+                                    var sparePart = await _requestManager.Get($"https://boodmo.com/api/v1/customer/api/catalog/part/{detail.StoreId.ToString()}");
+
+                                    detail.PartNumber = sparePart["number"].ToString();
+                                }
+
+                                item.OEMReplacementParts = details;
                             }
 
-                            item.OEMReplacementParts = details;
-                            item.AftermarketReplacementParts = aftermarkets;
                             item.Offers = offers;
 
                             if (link2["items"] != null && ((JArray)link2["items"]).Count != 0)
