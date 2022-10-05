@@ -33,9 +33,7 @@ namespace BoodmoParser
             headers.Add("sec-ch-ua", "\"Google Chrome\";v=\"105\", \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"105\"");
             headers.Add("X-Client-Version", "4.4.1");
             headers.Add("sec-ch-ua-mobile", "?0");
-            headers.Add("X-Api", "CustomerAPI");
-            headers.Add("Authorization", "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjU4NWI5MGI1OWM2YjM2ZDNjOTBkZjBlOTEwNDQ1M2U2MmY4ODdmNzciLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoic2hhc2hpayBLaGV0YW5pIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FJdGJ2bWtGWC0yNWhTR1M0U1pvNE12UlpIWWpkelBtc1QxM1lFQkd4aElpPXM5Ni1jIiwiY2lkIjoxNzkyMTA0LCJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vYm9vZG1vLXRlc3QiLCJhdWQiOiJib29kbW8tdGVzdCIsImF1dGhfdGltZSI6MTY2NDM1MDcwNSwidXNlcl9pZCI6IjE3OTIxMDQiLCJzdWIiOiIxNzkyMTA0IiwiaWF0IjoxNjY0ODY4NzI1LCJleHAiOjE2NjQ4NzIzMjUsImVtYWlsIjoic2hhc2hpa2toZXRhbmlAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInBob25lX251bWJlciI6Iis5MTc2MjMwMzg1NTYiLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7InBob25lIjpbIis5MTc2MjMwMzg1NTYiXSwiZW1haWwiOlsic2hhc2hpa2toZXRhbmlAZ21haWwuY29tIl19LCJzaWduX2luX3Byb3ZpZGVyIjoicGhvbmUifX0.FXBFHXs_TFGMp4vI2tzMgqYuFqgWhyEdQMwhhmGWJCXPMAIezQ7NxKVn3yUXpbg4L_OZVnJqkwcv75UNkI-DF2kPH_EKUlC9fNko1iThg9jnfvizC0kzoZUIR92bK8SfeXkKWmPQfhrqVGMlQeHCMOrgXFSUtU6SJiOrBI-3yr2FKUMxQpWacGgbdyKNHbQhEFrwG-JE5scZjFi3E5bZooI7Ed3m8YNNRx7o3h0WR5pBdBl7ZU3yEETEa-e5T12SkFxCT2XflkETQ0DPHXyTaNQrIzqJv-aNbErnaIlG8Z8c-mELlVvkuS7VEmkbWqSogabUYF_Lotfy1vwM3LB4Ow");
-            headers.Add("X-Client-App", "web");
+            headers.Add("X-Api", "CustomerAPI");headers.Add("X-Client-App", "web");
             headers.Add("Accept", "application/json, text/plain, */*");
             headers.Add("Referer", "https://boodmo.com/");
             headers.Add("X-Client-Id", "e3d9bcb2915ce83b40a3a90724e12b0b");

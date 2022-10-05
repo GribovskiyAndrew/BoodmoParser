@@ -184,7 +184,6 @@ namespace BoodmoParser.Parsers
                             await context.Database.ExecuteSqlRawAsync($@"UPDATE Numbers SET Done = 1,
                                                                          ItemId = {item.Id} Where Id = {part.Id}");
                         }
-
                         catch (Exception ex)
                         {
                             Console.WriteLine(ex.Message);
@@ -205,21 +204,17 @@ namespace BoodmoParser.Parsers
 
                                 driver.Navigate().GoToUrl("https://boodmo.com/catalog/part-41602m75j12-36619363/");
 
-                                //driver.FindElement(By.Id("username")).SendKeys("HPSW3246a");
-                                //driver.FindElement(By.Id("password")).SendKeys("Welcome123$");
-                                //driver.FindElement(By.CssSelector("[type='submit']")).Click();
-
-                                //var el = driver.FindElement(By.ClassName("p-dataview-content"));
+                                driver.FindElement(By.CssSelector("h2.part-info-heading"));
 
                                 var logs = driver.Manage().Logs;
 
                                 var perf = logs.GetLog(LogType.Performance);
 
-                                var item = perf.Select(x => x.Message).Where(x => x.Contains("Network.requestWillBeSentExtraInfo") && x.Contains("JSESSIONID") && x.Contains("SBSEPC5CS") && x.Contains("SBSEPC5S")).First();
+                                var item = perf.Select(x => x.Message).Where(x => x.Contains("Network.requestWillBeSent") && x.Contains("X-Boo-Sign") && x.Contains("X-Date") && x.Contains("X-Client-Id")).First();
 
                                 JObject result = JObject.Parse(item);
 
-                                var headers = result["message"]["params"]["headers"];
+                                var headers = result["message"]["params"]["request"]["headers"];
 
                                 foreach (JProperty prop in headers.OfType<JProperty>())
                                 {
@@ -227,6 +222,8 @@ namespace BoodmoParser.Parsers
                                 }
 
                                 driver.Dispose();
+
+                                _requestManager.AddHeaders(_headers);
                             }
 
                         }
