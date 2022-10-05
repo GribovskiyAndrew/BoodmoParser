@@ -1,6 +1,8 @@
 ﻿using BoodmoParser.Entities;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 using System.Collections.Concurrent;
 
 namespace BoodmoParser.Parsers
@@ -22,6 +24,10 @@ namespace BoodmoParser.Parsers
         public async Task Run()
         {
 
+            Dictionary<string, string> _headers;
+
+            object locker = new object();
+
             async Task Parse()
             {
                 while (!_queue.IsEmpty)
@@ -36,7 +42,7 @@ namespace BoodmoParser.Parsers
                         try
                         {
                             var search = await _requestManager.Get($"https://boodmo.com/api/v1/customer/api/pim/part/search?searchQuery={part.Name}&sort=new&page%5Boffset%5D=1&page%5Blimit%5D=48");
-                            
+
                             if (Convert.ToInt32(search["list"]["size"].ToString()) != 1)
                                 continue;
 
@@ -132,11 +138,11 @@ namespace BoodmoParser.Parsers
 
                                 int i = 1;
 
-                                while(limitOemReplacement > 0)
+                                while (limitOemReplacement > 0)
                                 {
                                     var link4 = await _requestManager.Get($"https://boodmo.com/api/v2/customer/api/pim/part/{id}/cross-link/list?filter%5Btype%5D=isOemReplacement&page%5Boffset%5D={i}&page%5Blimit%5D=48");
 
-                                    foreach(var oem in link4["items"])
+                                    foreach (var oem in link4["items"])
                                     {
                                         details.Add(new OEMReplacementParts
                                         {
@@ -178,9 +184,51 @@ namespace BoodmoParser.Parsers
                             await context.Database.ExecuteSqlRawAsync($@"UPDATE Numbers SET Done = 1,
                                                                          ItemId = {item.Id} Where Id = {part.Id}");
                         }
+
                         catch (Exception ex)
                         {
                             Console.WriteLine(ex.Message);
+
+                            lock (locker)
+                            {
+                                _headers = new Dictionary<string, string>();
+
+                                ChromeOptions options = new ChromeOptions();
+                                //options.AddArguments(new List<string>() { "--headless", "--no-sandbox", "--disable-dev-shm-usage" });
+                                options.AcceptInsecureCertificates = true;
+                                options.LeaveBrowserRunning = false;
+                                options.AddArgument("--disable-blink-features=AutomationControlled");
+                                options.SetLoggingPreference(LogType.Performance, LogLevel.All);
+
+                                ChromeDriver driver = new ChromeDriver(options);
+                                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+
+                                driver.Navigate().GoToUrl("https://boodmo.com/catalog/part-41602m75j12-36619363/");
+
+                                //driver.FindElement(By.Id("username")).SendKeys("HPSW3246a");
+                                //driver.FindElement(By.Id("password")).SendKeys("Welcome123$");
+                                //driver.FindElement(By.CssSelector("[type='submit']")).Click();
+
+                                //var el = driver.FindElement(By.ClassName("p-dataview-content"));
+
+                                var logs = driver.Manage().Logs;
+
+                                var perf = logs.GetLog(LogType.Performance);
+
+                                var item = perf.Select(x => x.Message).Where(x => x.Contains("Network.requestWillBeSentExtraInfo") && x.Contains("JSESSIONID") && x.Contains("SBSEPC5CS") && x.Contains("SBSEPC5S")).First();
+
+                                JObject result = JObject.Parse(item);
+
+                                var headers = result["message"]["params"]["headers"];
+
+                                foreach (JProperty prop in headers.OfType<JProperty>())
+                                {
+                                    _headers.Add(prop.Name, prop.Value.ToString());
+                                }
+
+                                driver.Dispose();
+                            }
+
                         }
                     }
                 }
