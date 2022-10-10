@@ -14,7 +14,7 @@ namespace BoodmoParser
         {
             var options = new DbContextOptionsBuilder<ApplicationContext>();
 
-            options.UseSqlite($"DataSource=file:data_vin.db?&cache=shared");
+            options.UseSqlite($"DataSource=file:C:/Users/lifebookE/source/repos/BoodmoParser/BoodmoParser/DB/data_vin_.db?&cache=shared");
 
             var context = new ApplicationContext(options.Options);
 

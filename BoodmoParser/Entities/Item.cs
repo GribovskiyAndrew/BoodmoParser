@@ -27,5 +27,7 @@ namespace BoodmoParser.Entities
         public string? Description { get; set; }
 
         public string? ImageName { get; set; }
+
+        public string? Path { get; set; }
     }
 }

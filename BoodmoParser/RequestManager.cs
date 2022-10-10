@@ -110,7 +110,9 @@ namespace BoodmoParser
             {
                 foreach(var header in headers)
                     request.Headers.TryAddWithoutValidation(header.Key, header.Value);
-                
+
+                //AddHeaders(request);
+
                 var response = await _httpClient.SendAsync(request);
 
                 return await GetResponse(response);
@@ -123,6 +125,8 @@ namespace BoodmoParser
             {
                 foreach (var header in headers)
                     request.Headers.TryAddWithoutValidation(header.Key, header.Value);
+
+                //AddHeaders(request);
 
                 var content = JsonSerializer.Serialize(data);
                 var buffer = Encoding.UTF8.GetBytes(content);

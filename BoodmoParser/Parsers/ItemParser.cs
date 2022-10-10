@@ -9,8 +9,11 @@ namespace BoodmoParser.Parsers
 {
     public class ItemParser : BaseParser, IParser
     {
+        private string brand = "MARUTI SUZUKI";
 
         private readonly ConcurrentQueue<dynamic> _queue;
+
+        private static object locker = new object();
 
         public ItemParser(RequestManager requestManager, ApplicationContext context) : base(requestManager, context)
         {
@@ -25,8 +28,6 @@ namespace BoodmoParser.Parsers
         {
 
             Dictionary<string, string> _headers;
-
-            object locker = new object();
 
             async Task Parse()
             {
@@ -43,10 +44,22 @@ namespace BoodmoParser.Parsers
                         {
                             var search = await _requestManager.Get($"https://boodmo.com/api/v1/customer/api/pim/part/search?searchQuery={part.Name}&sort=new&page%5Boffset%5D=1&page%5Blimit%5D=48");
 
-                            if (Convert.ToInt32(search["list"]["size"].ToString()) != 1)
+                            if (Convert.ToInt32(search["list"]["size"].ToString()) < 1)
                                 continue;
 
-                            var id = search["items"].First()["id"].ToString();
+                            string id = search["items"].First()["id"].ToString();
+
+                            if (Convert.ToInt32(search["list"]["size"].ToString()) > 1)
+                            {
+                                foreach (var i in search["items"])
+                                {
+                                    if (i["brand"]["name"].ToString() == brand)
+                                    {
+                                        id = i["id"].ToString();
+                                        break;
+                                    }
+                                }
+                            }
 
                             var link1 = await _requestManager.Get($"https://boodmo.com/api/v1/customer/api/catalog/part/{id}");
 
@@ -62,6 +75,14 @@ namespace BoodmoParser.Parsers
                                 Description = link1["custom_attributes"]["gmc_title"].ToString(),
                                 ImageName = link1["image"].ToString(),
                             };
+
+                            if (link1["categories"] != null)
+                                foreach (var i in link1["categories"])
+                                {
+                                    item.Path += "/" + i["name"].ToString();
+                                }
+
+                            item.Path += "/" + link1["name"].ToString();
 
                             //var imgName = link1["image"].ToString();
 
@@ -202,7 +223,16 @@ namespace BoodmoParser.Parsers
                                 ChromeDriver driver = new ChromeDriver(options);
                                 driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
 
+                                driver.Navigate().GoToUrl("https://boodmo.com/u/signin/");
+
+                                driver.FindElement(By.CssSelector("[type='email']")).SendKeys("rahimkayte@gmail.com");
+                                driver.FindElement(By.CssSelector("button.btn.btn-block")).Click();
+                                driver.FindElement(By.CssSelector("[type='password']")).SendKeys("rahim@2000");
+                                driver.FindElement(By.CssSelector("button.btn.btn-block")).Click();
+
                                 driver.Navigate().GoToUrl("https://boodmo.com/catalog/part-41602m75j12-36619363/");
+
+                                var el = driver.FindElement(By.ClassName("p-dataview-content"));
 
                                 driver.FindElement(By.CssSelector("h2.part-info-heading"));
 
