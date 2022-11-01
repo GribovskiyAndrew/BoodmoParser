@@ -9,7 +9,7 @@ namespace BoodmoParser.Parsers
 {
     public class ItemParser : BaseParser, IParser
     {
-        private string brand = "MARUTI SUZUKI";
+        private string brand = "VAG (VW, AUDI, SKODA)";
 
         private readonly ConcurrentQueue<dynamic> _queue;
 
@@ -19,6 +19,7 @@ namespace BoodmoParser.Parsers
         {
             _queue = new ConcurrentQueue<dynamic>(
                 _context.Numbers
+                .Where(x => x.Id > 18240)
                 .Where(x => !x.Done)
                 .Select(x => new { x.Name, x.Id })
                 .ToList());
@@ -209,52 +210,52 @@ namespace BoodmoParser.Parsers
                         {
                             Console.WriteLine(ex.Message);
 
-                            lock (locker)
-                            {
-                                _headers = new Dictionary<string, string>();
+                            //lock (locker)
+                            //{
+                            //    _headers = new Dictionary<string, string>();
 
-                                ChromeOptions options = new ChromeOptions();
-                                //options.AddArguments(new List<string>() { "--headless", "--no-sandbox", "--disable-dev-shm-usage" });
-                                options.AcceptInsecureCertificates = true;
-                                options.LeaveBrowserRunning = false;
-                                options.AddArgument("--disable-blink-features=AutomationControlled");
-                                options.SetLoggingPreference(LogType.Performance, LogLevel.All);
+                            //    ChromeOptions options = new ChromeOptions();
+                            //    //options.AddArguments(new List<string>() { "--headless", "--no-sandbox", "--disable-dev-shm-usage" });
+                            //    options.AcceptInsecureCertificates = true;
+                            //    options.LeaveBrowserRunning = false;
+                            //    options.AddArgument("--disable-blink-features=AutomationControlled");
+                            //    options.SetLoggingPreference(LogType.Performance, LogLevel.All);
 
-                                ChromeDriver driver = new ChromeDriver(options);
-                                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+                            //    ChromeDriver driver = new ChromeDriver(options);
+                            //    driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
 
-                                driver.Navigate().GoToUrl("https://boodmo.com/u/signin/");
+                            //    driver.Navigate().GoToUrl("https://boodmo.com/u/signin/");
 
-                                driver.FindElement(By.CssSelector("[type='email']")).SendKeys("rahimkayte@gmail.com");
-                                driver.FindElement(By.CssSelector("button.btn.btn-block")).Click();
-                                driver.FindElement(By.CssSelector("[type='password']")).SendKeys("rahim@2000");
-                                driver.FindElement(By.CssSelector("button.btn.btn-block")).Click();
+                            //    driver.FindElement(By.CssSelector("[type='email']")).SendKeys("rahimkayte@gmail.com");
+                            //    driver.FindElement(By.CssSelector("button.btn.btn-block")).Click();
+                            //    driver.FindElement(By.CssSelector("[type='password']")).SendKeys("rahim@2000");
+                            //    driver.FindElement(By.CssSelector("button.btn.btn-block")).Click();
 
-                                driver.Navigate().GoToUrl("https://boodmo.com/catalog/part-41602m75j12-36619363/");
+                            //    driver.Navigate().GoToUrl("https://boodmo.com/catalog/part-41602m75j12-36619363/");
 
-                                var el = driver.FindElement(By.ClassName("p-dataview-content"));
+                            //    var el = driver.FindElement(By.ClassName("p-dataview-content"));
 
-                                driver.FindElement(By.CssSelector("h2.part-info-heading"));
+                            //    driver.FindElement(By.CssSelector("h2.part-info-heading"));
 
-                                var logs = driver.Manage().Logs;
+                            //    var logs = driver.Manage().Logs;
 
-                                var perf = logs.GetLog(LogType.Performance);
+                            //    var perf = logs.GetLog(LogType.Performance);
 
-                                var item = perf.Select(x => x.Message).Where(x => x.Contains("Network.requestWillBeSent") && x.Contains("X-Boo-Sign") && x.Contains("X-Date") && x.Contains("X-Client-Id")).First();
+                            //    var item = perf.Select(x => x.Message).Where(x => x.Contains("Network.requestWillBeSent") && x.Contains("X-Boo-Sign") && x.Contains("X-Date") && x.Contains("X-Client-Id")).First();
 
-                                JObject result = JObject.Parse(item);
+                            //    JObject result = JObject.Parse(item);
 
-                                var headers = result["message"]["params"]["request"]["headers"];
+                            //    var headers = result["message"]["params"]["request"]["headers"];
 
-                                foreach (JProperty prop in headers.OfType<JProperty>())
-                                {
-                                    _headers.Add(prop.Name, prop.Value.ToString());
-                                }
+                            //    foreach (JProperty prop in headers.OfType<JProperty>())
+                            //    {
+                            //        _headers.Add(prop.Name, prop.Value.ToString());
+                            //    }
 
-                                driver.Dispose();
+                            //    driver.Dispose();
 
-                                _requestManager.AddHeaders(_headers);
-                            }
+                            //    _requestManager.AddHeaders(_headers);
+                            //}
 
                         }
                     }
@@ -262,8 +263,8 @@ namespace BoodmoParser.Parsers
             }
 
             await Task.WhenAll(
-                Parse(),
-                Parse(),
+                //Parse(),
+                //Parse(),
                 Parse(),
                 Parse()
                 );

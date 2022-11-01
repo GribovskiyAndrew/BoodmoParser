@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using System.Net;
 using System.Net.Http.Headers;
+using System.Security.Policy;
 using System.Text;
 using System.Text.Json;
 
@@ -12,19 +13,20 @@ namespace BoodmoParser
 
         private Dictionary<string, string> headers = new Dictionary<string, string>();
 
+        public int Count = 0;
         public RequestManager()
         {
             var handler = new HttpClientHandler();
             handler.UseCookies = false;
 
-            //handler.Proxy = new WebProxy()
-            //{
-            //    Address = new Uri($"http://104.144.108.112:8800"),
-            //    BypassProxyOnLocal = false,
-            //    UseDefaultCredentials = false,
+            handler.Proxy = new WebProxy()
+            {
+                Address = new Uri($"http://94.177.134.106:8800"),
+                BypassProxyOnLocal = false,
+                UseDefaultCredentials = false,
 
-            //    Credentials = new NetworkCredential(userName: "161891", password: "9s2bvJEmMaN")
-            //};
+                Credentials = new NetworkCredential(userName: "162752", password: "4X8AqZaE8")
+            };
 
             handler.AutomaticDecompression = ~DecompressionMethods.None;
 
@@ -82,20 +84,20 @@ namespace BoodmoParser
 
         private void AddHeaders(HttpRequestMessage request)
         {
-            request.Headers.TryAddWithoutValidation("sec-ch-ua", "\"Google Chrome\";v=\"105\", \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"105\"");
-            request.Headers.TryAddWithoutValidation("X-Client-Version", "4.4.1");
+            request.Headers.TryAddWithoutValidation("sec-ch-ua", "\"Google Chrome\";v=\"107\", \"Chromium\";v=\"107\", \"Not=A?Brand\";v=\"24\"");
+            request.Headers.TryAddWithoutValidation("X-Client-Version", "4.6.0");
             request.Headers.TryAddWithoutValidation("sec-ch-ua-mobile", "?0");
             request.Headers.TryAddWithoutValidation("X-Api", "CustomerAPI");
-            request.Headers.TryAddWithoutValidation("Authorization", "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjU4NWI5MGI1OWM2YjM2ZDNjOTBkZjBlOTEwNDQ1M2U2MmY4ODdmNzciLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoic2hhc2hpayBLaGV0YW5pIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FJdGJ2bWtGWC0yNWhTR1M0U1pvNE12UlpIWWpkelBtc1QxM1lFQkd4aElpPXM5Ni1jIiwiY2lkIjoxNzkyMTA0LCJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vYm9vZG1vLXRlc3QiLCJhdWQiOiJib29kbW8tdGVzdCIsImF1dGhfdGltZSI6MTY2NDM1MDcwNSwidXNlcl9pZCI6IjE3OTIxMDQiLCJzdWIiOiIxNzkyMTA0IiwiaWF0IjoxNjY0ODY4NzI1LCJleHAiOjE2NjQ4NzIzMjUsImVtYWlsIjoic2hhc2hpa2toZXRhbmlAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInBob25lX251bWJlciI6Iis5MTc2MjMwMzg1NTYiLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7InBob25lIjpbIis5MTc2MjMwMzg1NTYiXSwiZW1haWwiOlsic2hhc2hpa2toZXRhbmlAZ21haWwuY29tIl19LCJzaWduX2luX3Byb3ZpZGVyIjoicGhvbmUifX0.FXBFHXs_TFGMp4vI2tzMgqYuFqgWhyEdQMwhhmGWJCXPMAIezQ7NxKVn3yUXpbg4L_OZVnJqkwcv75UNkI-DF2kPH_EKUlC9fNko1iThg9jnfvizC0kzoZUIR92bK8SfeXkKWmPQfhrqVGMlQeHCMOrgXFSUtU6SJiOrBI-3yr2FKUMxQpWacGgbdyKNHbQhEFrwG-JE5scZjFi3E5bZooI7Ed3m8YNNRx7o3h0WR5pBdBl7ZU3yEETEa-e5T12SkFxCT2XflkETQ0DPHXyTaNQrIzqJv-aNbErnaIlG8Z8c-mELlVvkuS7VEmkbWqSogabUYF_Lotfy1vwM3LB4Ow");
             request.Headers.TryAddWithoutValidation("X-Client-App", "web");
+            request.Headers.TryAddWithoutValidation("Authorization", "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImRjMzdkNTkzNjVjNjIyOGI4Y2NkYWNhNTM2MGFjMjRkMDQxNWMxZWEiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiSmFjayBsaWFtIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FMbTV3dTE0Vk5LTnNjbHFGV1lTaTBDY25wWG1UOHZMX2NMOGxMRHRZVlFIPXM5Ni1jIiwiY2lkIjozMTU1NTkyLCJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vYm9vZG1vLXRlc3QiLCJhdWQiOiJib29kbW8tdGVzdCIsImF1dGhfdGltZSI6MTY2NzI0NzAxMywidXNlcl9pZCI6IjZTMmM3S2Q0OThRNFZGN3JmNTdxWkNBdFkxVDIiLCJzdWIiOiI2UzJjN0tkNDk4UTRWRjdyZjU3cVpDQXRZMVQyIiwiaWF0IjoxNjY3MjgyMjU0LCJleHAiOjE2NjcyODU4NTQsImVtYWlsIjoiamFja2xpYW0yNTIwQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7Imdvb2dsZS5jb20iOlsiMTE4Mzc2MTkzMzg3MjUzNjg5MzM0Il0sImVtYWlsIjpbImphY2tsaWFtMjUyMEBnbWFpbC5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.MSEPteh7BriuHJ4xbT5jXNu3xjypjtAqQw-7JaA8duNEcW6HpSnHlRzRPMjNAwVKZbkRh8q1Kexf2pLLYz1rsHiTt0ow6c-LBp5ZO6eIg2FFp3LJTcCjLii7igi7h8QCpWmc_rAVD_AaqBz7hnVQXxaRLJdnBgwr2wpAxUTue5UWuzecQGLbu45gmBlidYePgeDA-CC_-1VWyi2lU2MX-KOtWgng_jElRpQcPM7C91kLy1gOgc8KxZ-xQOsRv45ivtmo94cc0j2cJyUSfO3PATB1FirG4kzy4q3oYiwbL7R3z8eILfE6OB4fo0OlYS1PJNhGFeJR98us_mmY5A8ucw");
+            request.Headers.TryAddWithoutValidation("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36");
             request.Headers.TryAddWithoutValidation("Accept", "application/json, text/plain, */*");
             request.Headers.TryAddWithoutValidation("Referer", "https://boodmo.com/");
-            request.Headers.TryAddWithoutValidation("X-Client-Id", "e3d9bcb2915ce83b40a3a90724e12b0b");
-            request.Headers.TryAddWithoutValidation("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36");
-            request.Headers.TryAddWithoutValidation("X-Date", "2022-10-04T07:44:50.006Z");
+            request.Headers.TryAddWithoutValidation("X-Client-Id", "55f5bfcb48e712f66cba594157d277a1");
+            request.Headers.TryAddWithoutValidation("X-Boo-Sign", "8db2abd51d684e9d6e16ce5593ecbf1b");
+            request.Headers.TryAddWithoutValidation("X-Date", "2022-11-01T06:24:46.659Z");
             request.Headers.TryAddWithoutValidation("Accept-Version", "v1");
-            request.Headers.TryAddWithoutValidation("X-Client-Build", "220928.1448");
-            request.Headers.TryAddWithoutValidation("X-Boo-Sign", "6c83e42effccd58531ebffd1ee9bdb15");
+            request.Headers.TryAddWithoutValidation("X-Client-Build", "221026.1443");
             request.Headers.TryAddWithoutValidation("sec-ch-ua-platform", "\"Windows\"");
         }
 
@@ -108,10 +110,10 @@ namespace BoodmoParser
         {
             using (var request = new HttpRequestMessage(HttpMethod.Get, url))
             {
-                foreach(var header in headers)
-                    request.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                //foreach(var header in headers)
+                //    request.Headers.TryAddWithoutValidation(header.Key, header.Value);
 
-                //AddHeaders(request);
+                AddHeaders(request);
 
                 var response = await _httpClient.SendAsync(request);
 
