@@ -21,29 +21,31 @@ namespace BoodmoParser
 
             handler.Proxy = new WebProxy()
             {
-                Address = new Uri($"http://94.177.134.106:8800"),
+                Address = new Uri($"http://109.94.163.66:52218"),
                 BypassProxyOnLocal = false,
                 UseDefaultCredentials = false,
 
-                Credentials = new NetworkCredential(userName: "162752", password: "4X8AqZaE8")
+                Credentials = new NetworkCredential(userName: "fqY7Mpqi", password: "Jw8x9jdn")
             };
 
             handler.AutomaticDecompression = ~DecompressionMethods.None;
 
             _httpClient = new HttpClient(handler);
 
-            headers.Add("sec-ch-ua", "\"Google Chrome\";v=\"105\", \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"105\"");
-            headers.Add("X-Client-Version", "4.4.1");
+            headers.Add("sec-ch-ua", "\"Google Chrome\";v=\"107\", \"Chromium\";v=\"107\", \"Not=A?Brand\";v=\"24\"");
+            headers.Add("X-Client-Version", "4.6.0");
             headers.Add("sec-ch-ua-mobile", "?0");
-            headers.Add("X-Api", "CustomerAPI");headers.Add("X-Client-App", "web");
+            headers.Add("X-Api", "CustomerAPI");
+            headers.Add("X-Client-App", "web");
+            headers.Add("Authorization", "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImRjMzdkNTkzNjVjNjIyOGI4Y2NkYWNhNTM2MGFjMjRkMDQxNWMxZWEiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiSmFjayBsaWFtIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FMbTV3dTE0Vk5LTnNjbHFGV1lTaTBDY25wWG1UOHZMX2NMOGxMRHRZVlFIPXM5Ni1jIiwiY2lkIjozMTU1NTkyLCJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vYm9vZG1vLXRlc3QiLCJhdWQiOiJib29kbW8tdGVzdCIsImF1dGhfdGltZSI6MTY2NzI0NzAxMywidXNlcl9pZCI6IjZTMmM3S2Q0OThRNFZGN3JmNTdxWkNBdFkxVDIiLCJzdWIiOiI2UzJjN0tkNDk4UTRWRjdyZjU3cVpDQXRZMVQyIiwiaWF0IjoxNjY3MzA4ODAzLCJleHAiOjE2NjczMTI0MDMsImVtYWlsIjoiamFja2xpYW0yNTIwQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7Imdvb2dsZS5jb20iOlsiMTE4Mzc2MTkzMzg3MjUzNjg5MzM0Il0sImVtYWlsIjpbImphY2tsaWFtMjUyMEBnbWFpbC5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.B2ugUK1w7YlASACE5BG46eNZK2K5zPK_E02eUiGQ1F9fY-jY_qMwp-cupcOoAvJXMA9oQnpWZj_zujnF3Ho4TCB9TVq4P3OkV3RvETPrA3nL-KX7QoXeWNPm5rKBUgFN73zMhhfS1NFdaLF8Xa8zY2RQ5C9fETSYj19_iEwQfmY6dv21fauqA2L983d03i7uSfpVV-wlz2OqaKJPFaCNZhgN7zjCno2ee0R1a9GHIlGVtBDIWVVWoEymUOpv6Z9IxeB3Q9mhOyNaXoFAF2NXFnvUTurwwm3a5b6sxQbVVL2iL3EHUZJzQcfAGc3rnP1CUiREnlM9vrEodmZiwfyzSA");
+            headers.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36");
             headers.Add("Accept", "application/json, text/plain, */*");
             headers.Add("Referer", "https://boodmo.com/");
             headers.Add("X-Client-Id", "e3d9bcb2915ce83b40a3a90724e12b0b");
-            headers.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36");
-            headers.Add("X-Date", "2022-10-04T07:44:50.006Z");
+            headers.Add("X-Boo-Sign", "a2f0c47791f99d947b67ed3aa336023a");
+            headers.Add("X-Date", "2022-11-01T13:20:19.382Z");
             headers.Add("Accept-Version", "v1");
-            headers.Add("X-Client-Build", "220928.1448");
-            headers.Add("X-Boo-Sign", "6c83e42effccd58531ebffd1ee9bdb15");
+            headers.Add("X-Client-Build", "221026.1443");
             headers.Add("sec-ch-ua-platform", "\"Windows\"");
         }
 
@@ -89,13 +91,13 @@ namespace BoodmoParser
             request.Headers.TryAddWithoutValidation("sec-ch-ua-mobile", "?0");
             request.Headers.TryAddWithoutValidation("X-Api", "CustomerAPI");
             request.Headers.TryAddWithoutValidation("X-Client-App", "web");
-            request.Headers.TryAddWithoutValidation("Authorization", "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImRjMzdkNTkzNjVjNjIyOGI4Y2NkYWNhNTM2MGFjMjRkMDQxNWMxZWEiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiSmFjayBsaWFtIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FMbTV3dTE0Vk5LTnNjbHFGV1lTaTBDY25wWG1UOHZMX2NMOGxMRHRZVlFIPXM5Ni1jIiwiY2lkIjozMTU1NTkyLCJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vYm9vZG1vLXRlc3QiLCJhdWQiOiJib29kbW8tdGVzdCIsImF1dGhfdGltZSI6MTY2NzI0NzAxMywidXNlcl9pZCI6IjZTMmM3S2Q0OThRNFZGN3JmNTdxWkNBdFkxVDIiLCJzdWIiOiI2UzJjN0tkNDk4UTRWRjdyZjU3cVpDQXRZMVQyIiwiaWF0IjoxNjY3MjgyMjU0LCJleHAiOjE2NjcyODU4NTQsImVtYWlsIjoiamFja2xpYW0yNTIwQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7Imdvb2dsZS5jb20iOlsiMTE4Mzc2MTkzMzg3MjUzNjg5MzM0Il0sImVtYWlsIjpbImphY2tsaWFtMjUyMEBnbWFpbC5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.MSEPteh7BriuHJ4xbT5jXNu3xjypjtAqQw-7JaA8duNEcW6HpSnHlRzRPMjNAwVKZbkRh8q1Kexf2pLLYz1rsHiTt0ow6c-LBp5ZO6eIg2FFp3LJTcCjLii7igi7h8QCpWmc_rAVD_AaqBz7hnVQXxaRLJdnBgwr2wpAxUTue5UWuzecQGLbu45gmBlidYePgeDA-CC_-1VWyi2lU2MX-KOtWgng_jElRpQcPM7C91kLy1gOgc8KxZ-xQOsRv45ivtmo94cc0j2cJyUSfO3PATB1FirG4kzy4q3oYiwbL7R3z8eILfE6OB4fo0OlYS1PJNhGFeJR98us_mmY5A8ucw");
+            request.Headers.TryAddWithoutValidation("Authorization", "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImRjMzdkNTkzNjVjNjIyOGI4Y2NkYWNhNTM2MGFjMjRkMDQxNWMxZWEiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiQU1nbCBHTGFtIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FJdGJ2bW0yY2RXRGt2Vjl1eGFZVDlKMThrcTRTbnZoNFZZUmFTUVZUdmpUPXM5Ni1jIiwiY2lkIjoyOTcxMDQ5LCJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vYm9vZG1vLXRlc3QiLCJhdWQiOiJib29kbW8tdGVzdCIsImF1dGhfdGltZSI6MTY2NzU0OTU4OCwidXNlcl9pZCI6InY2Q0NWTWY0TWZlSjlOT1EwZllCUWM0QVRpVDIiLCJzdWIiOiJ2NkNDVk1mNE1mZUo5Tk9RMGZZQlFjNEFUaVQyIiwiaWF0IjoxNjY3NTU0NDc2LCJleHAiOjE2Njc1NTgwNzYsImVtYWlsIjoiYW1nbC50YXBraTIwMjBAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZ29vZ2xlLmNvbSI6WyIxMDQ1NDMwODAzOTMxMTkzNzE0NDMiXSwiZW1haWwiOlsiYW1nbC50YXBraTIwMjBAZ21haWwuY29tIl19LCJzaWduX2luX3Byb3ZpZGVyIjoicGFzc3dvcmQifX0.dE6DZxRSJDa0vqJpZlKXiFg4RCsW2-fWsM9q3Fop-4g-_1AEyIzPo7E7e0cjQvUK9Lks8mPokNFFLRTLOV2iXfyVo-5R8RuXQbXe_j7TtFrF-l6crMgQ4ugiRC7rN1qhb6ZVoJ3lpI5Br_GWzTGigjX3mNCueCzFqgAw_miJyr8odO_ijcSGFiDbL07zyyMj9zmqszViN5JfXOcs-c_9_c4hm_kwDhX2umseR0vA8rVm2pnXJsKkR95C96Qs_b6My1vPSgECwop_hyUE0Hzw5VZyhgWyoN0aKJOiZrckmKU6EH5as7I9ZLX6hgnpfQ4t3AsnuD71r8qQ_SuperI3Fw");
             request.Headers.TryAddWithoutValidation("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36");
             request.Headers.TryAddWithoutValidation("Accept", "application/json, text/plain, */*");
             request.Headers.TryAddWithoutValidation("Referer", "https://boodmo.com/");
-            request.Headers.TryAddWithoutValidation("X-Client-Id", "55f5bfcb48e712f66cba594157d277a1");
-            request.Headers.TryAddWithoutValidation("X-Boo-Sign", "8db2abd51d684e9d6e16ce5593ecbf1b");
-            request.Headers.TryAddWithoutValidation("X-Date", "2022-11-01T06:24:46.659Z");
+            request.Headers.TryAddWithoutValidation("X-Client-Id", "e3d9bcb2915ce83b40a3a90724e12b0b");
+            request.Headers.TryAddWithoutValidation("X-Boo-Sign", "7efcce4312df0160126e7082dd659413");
+            request.Headers.TryAddWithoutValidation("X-Date", "2022-11-04T09:34:31.315Z");
             request.Headers.TryAddWithoutValidation("Accept-Version", "v1");
             request.Headers.TryAddWithoutValidation("X-Client-Build", "221026.1443");
             request.Headers.TryAddWithoutValidation("sec-ch-ua-platform", "\"Windows\"");
@@ -110,7 +112,7 @@ namespace BoodmoParser
         {
             using (var request = new HttpRequestMessage(HttpMethod.Get, url))
             {
-                //foreach(var header in headers)
+                //foreach (var header in headers)
                 //    request.Headers.TryAddWithoutValidation(header.Key, header.Value);
 
                 AddHeaders(request);

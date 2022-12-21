@@ -19,7 +19,7 @@ namespace BoodmoParser.Parsers
         {
             _queue = new ConcurrentQueue<dynamic>(
                 _context.Numbers
-                .Where(x => x.Id > 18240)
+                .Where(x => x.Id > 28950)
                 .Where(x => !x.Done)
                 .Select(x => new { x.Name, x.Id })
                 .ToList());
@@ -29,6 +29,8 @@ namespace BoodmoParser.Parsers
         {
 
             Dictionary<string, string> _headers;
+
+            int Count = 0;
 
             async Task Parse()
             {
@@ -76,6 +78,9 @@ namespace BoodmoParser.Parsers
                                 Description = link1["custom_attributes"]["gmc_title"].ToString(),
                                 ImageName = link1["image"].ToString(),
                             };
+
+                            if (item.PartNumber.Contains("..."))
+                                throw new Exception("Headers need to be update. Number = " + part.Name + " Id = " + part.Id);
 
                             if (link1["categories"] != null)
                                 foreach (var i in link1["categories"])
@@ -136,6 +141,9 @@ namespace BoodmoParser.Parsers
                                                 ItemId = item.Id,
                                                 StoreId = Convert.ToInt32(aftermaket["id"].ToString()),
                                             });
+
+                                        if (aftermaket["number"].ToString().Contains("..."))
+                                            throw new Exception("Headers need to be update. Number = " + part.Name + " Id = " + part.Id);
                                     }
 
                                     limitReplacement -= 48;
@@ -175,6 +183,9 @@ namespace BoodmoParser.Parsers
                                             ItemId = item.Id,
                                             StoreId = Convert.ToInt32(oem["id"].ToString()),
                                         });
+
+                                        if (oem["number"].ToString().Contains("..."))
+                                            throw new Exception("Headers need to be update. Number = " + part.Name + " Id = " + part.Id);
                                     }
 
                                     limitOemReplacement -= 48;
@@ -212,49 +223,62 @@ namespace BoodmoParser.Parsers
 
                             //lock (locker)
                             //{
-                            //    _headers = new Dictionary<string, string>();
-
-                            //    ChromeOptions options = new ChromeOptions();
-                            //    //options.AddArguments(new List<string>() { "--headless", "--no-sandbox", "--disable-dev-shm-usage" });
-                            //    options.AcceptInsecureCertificates = true;
-                            //    options.LeaveBrowserRunning = false;
-                            //    options.AddArgument("--disable-blink-features=AutomationControlled");
-                            //    options.SetLoggingPreference(LogType.Performance, LogLevel.All);
-
-                            //    ChromeDriver driver = new ChromeDriver(options);
-                            //    driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-
-                            //    driver.Navigate().GoToUrl("https://boodmo.com/u/signin/");
-
-                            //    driver.FindElement(By.CssSelector("[type='email']")).SendKeys("rahimkayte@gmail.com");
-                            //    driver.FindElement(By.CssSelector("button.btn.btn-block")).Click();
-                            //    driver.FindElement(By.CssSelector("[type='password']")).SendKeys("rahim@2000");
-                            //    driver.FindElement(By.CssSelector("button.btn.btn-block")).Click();
-
-                            //    driver.Navigate().GoToUrl("https://boodmo.com/catalog/part-41602m75j12-36619363/");
-
-                            //    var el = driver.FindElement(By.ClassName("p-dataview-content"));
-
-                            //    driver.FindElement(By.CssSelector("h2.part-info-heading"));
-
-                            //    var logs = driver.Manage().Logs;
-
-                            //    var perf = logs.GetLog(LogType.Performance);
-
-                            //    var item = perf.Select(x => x.Message).Where(x => x.Contains("Network.requestWillBeSent") && x.Contains("X-Boo-Sign") && x.Contains("X-Date") && x.Contains("X-Client-Id")).First();
-
-                            //    JObject result = JObject.Parse(item);
-
-                            //    var headers = result["message"]["params"]["request"]["headers"];
-
-                            //    foreach (JProperty prop in headers.OfType<JProperty>())
+                            //    if (Count == _requestManager.Count)
                             //    {
-                            //        _headers.Add(prop.Name, prop.Value.ToString());
+                            //        _headers = new Dictionary<string, string>();
+
+                            //        ChromeOptions options = new ChromeOptions();
+                            //        //options.AddArguments(new List<string>() { "--headless", "--no-sandbox", "--disable-dev-shm-usage" });
+                            //        options.AcceptInsecureCertificates = true;
+                            //        options.LeaveBrowserRunning = false;
+                            //        options.AddArgument("--disable-blink-features=AutomationControlled");
+                            //        options.SetLoggingPreference(LogType.Performance, LogLevel.All);
+
+                            //        ChromeDriver driver = new ChromeDriver(options);
+                            //        driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+
+                            //        driver.Navigate().GoToUrl("https://boodmo.com/u/signin/");
+
+                            //        driver.FindElement(By.CssSelector("[type='email']")).SendKeys("jackliam2520@gmail.com");
+                            //        driver.FindElement(By.CssSelector("button.btn.btn-block")).Click();
+                            //        driver.FindElement(By.CssSelector("[type='password']")).SendKeys("jackliam@2023");
+                            //        driver.FindElement(By.CssSelector("button.btn.btn-block")).Click();
+
+                            //        driver.Navigate().GoToUrl("https://boodmo.com/catalog/part-41602m75j12-36619363/");
+
+                            //        var el = driver.FindElement(By.ClassName("p-dataview-content"));
+
+                            //        driver.FindElement(By.CssSelector("h2.part-info-heading"));
+
+                            //        var logs = driver.Manage().Logs;
+
+                            //        var perf = logs.GetLog(LogType.Performance);
+
+                            //        var item = perf.Select(x => x.Message).Where(x => x.Contains("Network.requestWillBeSent") && x.Contains("X-Boo-Sign") && x.Contains("X-Date") && x.Contains("X-Client-Id")).First();
+
+                            //        JObject result = JObject.Parse(item);
+
+                            //        var headers = result["message"]["params"]["request"]["headers"];
+
+                            //        foreach (JProperty prop in headers.OfType<JProperty>())
+                            //        {
+                            //            _headers.Add(prop.Name, prop.Value.ToString());
+                            //        }
+
+                            //        driver.Dispose();
+
+                            //        _requestManager.AddHeaders(_headers);
+
+                            //        Count++;
+                            //        _requestManager.Count++;
+
+                            //        Console.WriteLine("I set headres");
                             //    }
-
-                            //    driver.Dispose();
-
-                            //    _requestManager.AddHeaders(_headers);
+                            //    else
+                            //    {
+                            //        _requestManager.Count++;
+                            //        Console.WriteLine("Headers have been set");
+                            //    }
                             //}
 
                         }
@@ -263,8 +287,8 @@ namespace BoodmoParser.Parsers
             }
 
             await Task.WhenAll(
-                //Parse(),
-                //Parse(),
+                Parse(),
+                Parse(),
                 Parse(),
                 Parse()
                 );
